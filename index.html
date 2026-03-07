@@ -97,6 +97,9 @@
     let antrean = [];
     let currentBase64 = null;
 
+    // DAFTAR BECOMM RESMI
+    const daftarBecomm = ["NEW NEW", "ARISE", "UNSHAKEN", "PEARL", "DIAMOND", "CBG", "SLG", "CIMAHI", "TELLYOU", "OASIS", "BETON"];
+
     window.onload = function() {
         if (!currentBecomm) {
             setupBecomm();
@@ -108,10 +111,21 @@
     };
 
     function setupBecomm() {
-        const p = prompt("PILIH BECOMM:\nNEW NEW, ARISE, UNSHAKEN, PEARL, DIAMOND, CBG, SLG, CIMAHI, TELLYOU, OASIS, BETON");
-        if (p) {
-            localStorage.setItem("myBecomm", p.toUpperCase());
+        let menu = "PILIH NOMOR BECOMM:\n";
+        daftarBecomm.forEach((nama, index) => {
+            menu += (index + 1) + ". " + nama + "\n";
+        });
+
+        const pilihan = prompt(menu);
+        
+        // Cek apakah yang diinput adalah angka dan ada di dalam list
+        const idx = parseInt(pilihan) - 1;
+        if (daftarBecomm[idx]) {
+            localStorage.setItem("myBecomm", daftarBecomm[idx]);
             location.reload();
+        } else {
+            alert("Pilihan tidak valid! Silakan masukkan nomor 1 sampai " + daftarBecomm.length);
+            setupBecomm(); // Ulangi kalau salah input
         }
     }
 
@@ -129,7 +143,6 @@
         document.getElementById("uploadSection").style.display = (val === "TRANSFER") ? "block" : "none";
     }
 
-    // KOMPRESI GAMBAR AGAR UPLOAD KILAT
     function handlePreview(input) {
         if (input.files && input.files[0]) {
             const reader = new FileReader();
@@ -184,10 +197,8 @@
         const input = document.getElementById("bulkNama");
         const listNama = input.value.split("\n").map(n => n.trim().toUpperCase()).filter(n => n !== "");
         if (listNama.length === 0) return alert("Isi nama dulu!");
-        
         const btn = document.getElementById("btnSimpanNama");
         btn.innerText = "Mengirim...";
-        
         fetch(URL_APP, { method: "POST", body: JSON.stringify({ action: "addNamesBulk", becomm: currentBecomm, names: listNama }) })
         .then(() => { 
             input.value = ""; 
@@ -208,7 +219,6 @@
         const nama = document.getElementById("namaDropdown").value;
         const nabung = document.getElementById("nabung").value;
         if (!nama || !nabung) return alert("Lengkapi data!");
-        
         antrean.push({ 
             becomm: currentBecomm, 
             tanggal: document.getElementById("tanggal").value, 
@@ -216,7 +226,6 @@
             pembayaran: document.getElementById("pembayaran").value,
             imageBlob: currentBase64 
         });
-        
         renderAntrean();
         resetFile();
         document.getElementById("nabung").value = "";
@@ -237,9 +246,8 @@
     function kirimSemuaKeSheets() {
         const btn = document.getElementById("btnKirimSemua");
         const originalText = btn.innerText;
-        btn.innerText = "SEDANG MENGIRIM... JANGAN TUTUP HP";
+        btn.innerText = "SEDANG MENGIRIM... JGN DITUTUP DULU. SAMBIL NUNGGU AYAT HAFALAN DULU: 'KEKUATIRAN DALAM HATI MEMBUNGKUKKAN ORANG, TETAPI PERKATAAN YANG BAIK MENGGEMBIRAKAN DIA.' AMSAL 17:22";
         btn.disabled = true;
-        
         fetch(URL_APP, { method: "POST", body: JSON.stringify({ action: "saveBulk", transactions: antrean }) })
         .then(res => res.text()).then(msg => {
             alert(msg); 
@@ -254,7 +262,7 @@
             btn.innerText = originalText;
         });
     }
-</script>
-</body>
+</script></body>
 
 </html>
+
