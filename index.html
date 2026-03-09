@@ -246,7 +246,7 @@
     function kirimSemuaKeSheets() {
         const btn = document.getElementById("btnKirimSemua");
         const originalText = btn.innerText;
-        btn.innerText = "Sedang mengirim... Tunggu ya, jgn ditutup dulu. Sambil nunggu bisa ayat hafalan dlu :) '";
+        btn.innerText = "Sedang mengirim... Tunggu ya, jgn ditutup dulu. Sambil nunggu bisa ayat hafalan dlu, 1 Pet 5:7 'Serahkanlah segala kekuatiranmu kepada-Nya, sebab Ia yang memelihata kamu.'";
         btn.disabled = true;
         fetch(URL_APP, { method: "POST", body: JSON.stringify({ action: "saveBulk", transactions: antrean }) })
         .then(res => res.text()).then(msg => {
@@ -265,6 +265,7 @@
 </script></body>
 
 </html>
+
 
 
 
