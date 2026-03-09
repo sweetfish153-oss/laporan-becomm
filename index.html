@@ -185,7 +185,7 @@
 
     function refreshListEksis() {
         const listDiv = document.getElementById("listNamaEksis");
-        listDiv.innerHTML = "Memuat database... Ditunggu dulu ya... sambil nunggu coba inget2 hal baik apa yg terjadi hari ini ya? :D";
+        listDiv.innerHTML = "Memuat database... Ditunggu dulu ya... sambil nunggu coba senyum dulu, ciee tjakeup <3";
         fetch(URL_APP, { method: "POST", body: JSON.stringify({ action: "getNames", becomm: currentBecomm }) })
         .then(res => res.json()).then(names => {
             listDiv.innerHTML = names.sort().map(n => `
@@ -246,7 +246,7 @@
     function kirimSemuaKeSheets() {
         const btn = document.getElementById("btnKirimSemua");
         const originalText = btn.innerText;
-        btn.innerText = "Sedang mengirim... Tunggu ya, jgn ditutup dulu. Sambil nunggu bisa ayat hafalan dlu :) 'Sebab kami tidak memperhatikan yang kelihatan, melainkan yang tak kelihatan, karena yang keliahatan adalah sementara, sedangkan yang tak kelihatan adalah kekal.";
+        btn.innerText = "Sedang mengirim... Tunggu ya, jgn ditutup dulu. Sambil nunggu bisa ayat hafalan dlu :) '";
         btn.disabled = true;
         fetch(URL_APP, { method: "POST", body: JSON.stringify({ action: "saveBulk", transactions: antrean }) })
         .then(res => res.text()).then(msg => {
@@ -265,5 +265,6 @@
 </script></body>
 
 </html>
+
 
 
